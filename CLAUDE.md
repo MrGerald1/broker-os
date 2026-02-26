@@ -149,6 +149,9 @@ Do not do in the main context what a subagent can do in parallel.
 
 ## 6. Branch & Git Conventions
 
+- **Never commit or push directly to `main`.** Always work on a feature branch.
+- **Always use feature branches** — even for small changes. `main` is protected.
+- **Update `CHANGELOG.md` before opening a PR** — not after, not during merge. This is a hard gate.
 - Feature branches: `feature/<short-description>`
 - Bug fixes: `fix/<short-description>`
 - Claude-generated branches: `claude/<task-id>`
@@ -160,9 +163,10 @@ Do not do in the main context what a subagent can do in parallel.
 
 ## 7. Checklist Before Every Commit
 
+- [ ] Working on a feature branch — never on `main`
 - [ ] All tests pass (100%)
 - [ ] No hardcoded secrets or credentials
 - [ ] Critical path changes reviewed and confirmed with user
-- [ ] CHANGELOG.md updated with timestamp and business rationale
+- [ ] CHANGELOG.md updated with timestamp and business rationale (required before PR)
 - [ ] PRO vs AGAINST debate completed for non-trivial features
 - [ ] Subagent review done for complex or security-sensitive code
