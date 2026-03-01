@@ -1,5 +1,8 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 from app.config import get_settings
 from app.database import engine, Base
@@ -40,11 +43,22 @@ app.include_router(dashboard.router, prefix="/api/v1")
 app.include_router(insurers.router, prefix="/api/v1")
 
 
-@app.get("/")
-def root():
-    return {"message": "BrokerOS API v1.0", "docs": "/docs"}
-
-
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+
+# Serve React frontend — must come after all API routes
+_frontend_dist = os.path.join(os.path.dirname(__file__), "../../frontend/dist")
+if os.path.isdir(_frontend_dist):
+    app.mount("/assets", StaticFiles(directory=os.path.join(_frontend_dist, "assets")), name="assets")
+
+    @app.get("/")
+    @app.get("/{full_path:path}")
+    def serve_frontend(full_path: str = ""):
+        index = os.path.join(_frontend_dist, "index.html")
+        return FileResponse(index)
+else:
+    @app.get("/")
+    def root():
+        return {"message": "BrokerOS API v1.0", "docs": "/docs"}

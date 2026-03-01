@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## [2026-03-01 20:45] — Single-Port Serving (FastAPI serves React build)
+
+**Changes**:
+- FastAPI now mounts the React production build (`frontend/dist`) and serves it at `/`
+- All non-API routes fall through to `index.html` (SPA routing works correctly)
+- Static assets served under `/assets/`
+- Vite dev server exposed on `0.0.0.0` (`host: true`) for LAN/phone access during development
+
+**PR/Push**: `claude/build-broker-os-webapp-VaJBp`
+**Why it mattered**: Eliminates two-port dev requirement; single `uvicorn` process on port 8000 serves the full app, enabling simpler deployment and preview access.
+
+---
+
 ## [2026-02-26 04:15] — BrokerOS MVP Prototype
 
 **Changes**:
