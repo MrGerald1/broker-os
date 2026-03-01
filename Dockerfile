@@ -9,6 +9,11 @@ RUN npm run build
 # ── Stage 2: Python runtime ────────────────────────────────────────────────────
 FROM python:3.11-slim
 
+# Runtime libs needed by Pillow, reportlab, cryptography
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libjpeg62-turbo libfreetype6 zlib1g libffi8 libssl3 \
+    && rm -rf /var/lib/apt/lists/*
+
 # Mirrors local layout: /app/backend/app/main.py + /app/frontend/dist
 # so main.py's ../../frontend/dist resolves correctly.
 WORKDIR /app/backend
