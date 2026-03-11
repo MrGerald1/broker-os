@@ -1,8 +1,9 @@
 services:
   - type: web
     name: broker-os
-    runtime: docker
-    dockerfilePath: ./Dockerfile
+    runtime: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: sh start.sh
     envVars:
       - key: SECRET_KEY
         generateValue: true
