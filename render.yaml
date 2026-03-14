@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: broker-os
+    runtime: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: sh start.sh
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: APP_ENV
+        value: production
+      - key: DATABASE_URL
+        value: sqlite:///./brokeross.db
+      - key: ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "60"
+      - key: REFRESH_TOKEN_EXPIRE_DAYS
+        value: "30"
